@@ -35,14 +35,23 @@ document.addEventListener("dragover", (event) => {
 let urlbackup;
 
 document.querySelectorAll("img").forEach((element) => {
+  document.addEventListener("dragstart", (e) => {
+    //drag baslangicinda start olan elementin id sini kaydettik.
+    e.dataTransfer.setData("text", e.target.id);
+  });
   element.addEventListener("drop", (e) => {
     e.preventDefault();
-    console.log("dropped");
-    let data = e.dataTransfer.getData("text");
+    //dragin start oldugu elementi ve onun url ini aldik.
+    let firstelementid = e.dataTransfer.getData("text");
+    const firstelement = document.getElementById(firstelementid);
+    const firsturl = firstelement.src;
+    //drop ettigimiz elementin url ini aldik.
     urlbackup = e.target.src;
-    console.log(data);
+    console.log(firstelementid);
     console.log(urlbackup);
-    e.target.src = data;
+    //url leri yer degistirdik.
+    e.target.src = firsturl;
+    firstelement.src = urlbackup;
   });
 });
 
